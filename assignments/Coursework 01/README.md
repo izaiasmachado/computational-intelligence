@@ -11,10 +11,10 @@ Usando o conjunto de dados do aerogerador (variável de entrada: velocidade do v
 Avalie a qualidade de cada modelo pela métrica $R^2$ e $R^2_{aj}$ (equações 48 e 49, slides sobre Regressão Múltipla).
 
 ### Questão 03
-Dada a base de dados abaixo, na qual a primeira e segunda colunas são as variáveis regressoras ($x_1$ e $x_2$) e a terceira coluna é a variável dependente ($y$), determine o modelo de regressão múltipla (plano) com parâmetros estimados pelo método dos mínimos quadrados. Avalie a qualidade do modelo pela métrica $R^2$. (3,0 pontos)
+Dada a base de dados abaixo, na qual a primeira e segunda colunas são as variáveis regressoras $(x_1$ e $x_2)$ e a terceira coluna é a variável dependente $(y)$, determine o modelo de regressão múltipla (plano) com parâmetros estimados pelo método dos mínimos quadrados. Avalie a qualidade do modelo pela métrica $R^2$. (3,0 pontos)
 
 ```
-D =[122 139 0.115;
+D = [122 139 0.115;
     114 126 0.120;
     086 090 0.105;
     134 144 0.090;
