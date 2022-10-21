@@ -1,6 +1,6 @@
 # Regression
 
-## Regressão Múltipla
+## Multiple Regression
 
 ### Implementation
 
@@ -25,7 +25,7 @@ D = [122 139 0.115;
 ];
 ```
 
-## Regressão Polinomial
+## Polynomial Regression
 
 ### Implementation
 

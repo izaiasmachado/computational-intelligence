@@ -2,7 +2,7 @@
 
 Exercises and assignments made during a Computational Intelligence class at Federal University Of Ceará.
 
-## [Lógica Fuzzy](./assignments/FuzzyLogic/)
+## [Fuzzy Logic](./assignments/FuzzyLogic/)
 
 Implementation of Fuzzy Logic with Mamdani Inference System. Handfull of class implementation to represent all Mamdani fuzzyfication and defuzzyfication processes.
 
