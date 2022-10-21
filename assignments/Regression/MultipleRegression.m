@@ -1,3 +1,9 @@
+% Disciplina          : SBL0080 - Inteligência Computacional
+% Professor           : Jarbas Joaci de Mesquita Sá Júnior
+% Descrição           : Classe de Regressão Múltipla - Trabalho 01
+% Autor(a)            : Izaias Machado Pessoa Neto
+% Data de Modificação : 12/10/2022
+
 classdef MultipleRegression
     %MULTIPLEREGRESSION Realiza a regressão múltipla
     %   Calcula os coeficientes b que determinam o hiperplano 
@@ -12,7 +18,6 @@ classdef MultipleRegression
         input
         expected
         coefficients
-        predicted
         sqe
         syy
     end
@@ -22,24 +27,21 @@ classdef MultipleRegression
         end
         
         function regression = fit(regression, input, expected)
-            regression.input = input;
-            regression.expected = expected;
-            
-            regression.coefficients = (regression.input' * regression.input) ^ -1 * regression.input' * regression.expected;
-            regression.predicted = regression.predict(input);
+            regression.coefficients = (input' * input) ^ -1 * input' * expected;
         end
         
         function prediction = predict(regression, input)
             prediction = input * regression.coefficients;
         end
 
-        function regression = variability(regression)
-            regression.sqe = sum((regression.expected - regression.predicted) .^ 2);
-            regression.syy = sum((regression.expected - mean(regression.expected)) .^ 2);
+        function regression = variability(regression, inputs, expected)
+            predicted = regression.predict(inputs);
+            regression.sqe = sum((expected - predicted) .^ 2);
+            regression.syy = sum((expected - mean(expected)) .^ 2);
         end
 
-        function rSquared = rSquared(regression)
-            regression = regression.variability();
+        function rSquared = rSquared(regression, inputs, expected)
+            regression = regression.variability(inputs, expected);
             rSquared = 1 - (regression.sqe / regression.syy);
         end
     end
