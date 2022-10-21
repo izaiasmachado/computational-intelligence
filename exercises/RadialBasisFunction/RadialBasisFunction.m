@@ -4,6 +4,7 @@ classdef RadialBasisFunction
         sigma
         centroids
         M
+        outputs
     end
     
     methods(Static)
@@ -13,10 +14,11 @@ classdef RadialBasisFunction
     end
 
     methods
-        function rbf = RadialBasisFunction(q)
+        function rbf = RadialBasisFunction(q, outputs)
             rbf.q = q;
             rbf.sigma = 1;
-            rbf.centroids = normrnd(0, rbf.sigma, [1, q]);
+            rbf.outputs = outputs;
+            rbf.centroids = normrnd(0, rbf.sigma, [outputs, q]);
         end
         
         function rbf = train(rbf, X, D)
@@ -30,27 +32,20 @@ classdef RadialBasisFunction
         end
 
         function Z = transformInput(rbf, X)
-            N = length(X');
+            [~, N] = size(X);
             Z = zeros(rbf.q, N);
 
             for i = 1 : N
-                x = X(i);
-                trainedNeuron = rbf.trainHiddenLayer(x);
-                Z(:, i) = trainedNeuron;
+                for neuronId = 1 : rbf.q
+                    centroid = rbf.centroids(neuronId);
+                    x = X(:, i);
+                    u = norm(x - centroid);
+                    fu = rbf.exponentialFunction(u, rbf.sigma);    
+                    Z(neuronId, i) = fu;
+                end
             end
             
             Z = [(-1) * ones(1, N); Z];
-        end
-
-        function trainedNeuron = trainHiddenLayer(rbf, x)
-            trainedNeuron = zeros(rbf.q, 1);
-
-            for neuronId = 1 : length(trainedNeuron)
-                centroid = rbf.centroids(neuronId);
-                u = norm(x - centroid);
-                fu = rbf.exponentialFunction(u, rbf.sigma);    
-                trainedNeuron(neuronId) = fu;
-            end
         end
     end
 end
