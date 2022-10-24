@@ -7,13 +7,6 @@ classdef RadialBasisFunction
         outputs
     end
     
-    methods(Static)
-        function x = addBias(x)
-            [~, n] = size(x);
-            x = [(-1) * ones(1, n); x];
-        end
-    end
-
     methods
         function rbf = RadialBasisFunction(q)
             rbf.q = q;
@@ -50,7 +43,7 @@ classdef RadialBasisFunction
                 end
             end
             
-            Z = rbf.addBias(Z);
+            Z = Processing.addBias(Z);
         end
     end
 end
