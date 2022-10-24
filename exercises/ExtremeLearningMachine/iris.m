@@ -9,5 +9,5 @@ D = dataset(:, 5:7)';
 X = Processing.zscore(X);
 
 q = 20;
-rbf = RadialBasisFunction(q);
-Testing.leaveOneOut(rbf, X, D);
+elm = ExtremeLearningMachine(q);
+Testing.leaveOneOut(elm , X, D);
