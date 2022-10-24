@@ -5,17 +5,6 @@ classdef ExtremeLearningMachine
         C
         M
     end
-    
-    methods(Static)
-        function fu = sigmoid(u, sigma)
-            fu = exp(-u .^ 2 / (2 * sigma .^ 2));
-        end
-        
-        function x = addBias(x)
-            [~, n] = size(x);
-            x = [(-1) * ones(1, n); x];
-        end
-    end
 
     methods
         function elm = ExtremeLearningMachine(q)
@@ -40,11 +29,10 @@ classdef ExtremeLearningMachine
         end
 
         function Z = hiddenLayerTransformation(elm, X)
-            [~, n] = size(X);
-            X = elm.addBias(X);
+            X = Processing.addBias(X);
             Z = elm.C * X;
-            Z = elm.sigmoid(Z, elm.sigma);
-            Z = [(-1) * ones(1, n); Z];
+            Z = Activation.sigmoid(Z, elm.sigma);
+            Z = Processing.addBias(Z);
         end
     end
 end

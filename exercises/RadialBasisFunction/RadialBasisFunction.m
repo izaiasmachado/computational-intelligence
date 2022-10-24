@@ -2,50 +2,55 @@ classdef RadialBasisFunction
     properties
         q
         sigma
-        centroids
+        C
         M
         outputs
     end
     
     methods(Static)
-        function fu = exponentialFunction(u, sigma)
-            fu = exp(-u ^ 2 / (2 * sigma ^ 2));
+        function x = addBias(x)
+            [~, n] = size(x);
+            x = [(-1) * ones(1, n); x];
         end
     end
 
     methods
-        function rbf = RadialBasisFunction(q, outputs)
+        function rbf = RadialBasisFunction(q)
             rbf.q = q;
             rbf.sigma = 1;
-            rbf.outputs = outputs;
-            rbf.centroids = normrnd(0, rbf.sigma, [outputs, q]);
         end
         
         function rbf = train(rbf, X, D)
-            Z = rbf.transformInput(X);
+            [p, ~] = size(X);
+            rbf = rbf.calculateCentroids(p);
+            Z = rbf.hiddenLayerTransformation(X);
             rbf.M = D * Z' / (Z * Z');
         end
 
         function prediction = predict(rbf, X)
-            Z = rbf.transformInput(X);
+            Z = rbf.hiddenLayerTransformation(X);
             prediction = rbf.M * Z;
         end
 
-        function Z = transformInput(rbf, X)
+        function rbf = calculateCentroids(rbf, p)
+            rbf.C = normrnd(0, rbf.sigma, [rbf.q, p + 1]);
+        end
+
+        function Z = hiddenLayerTransformation(rbf, X)
             [~, N] = size(X);
             Z = zeros(rbf.q, N);
 
             for i = 1 : N
                 for neuronId = 1 : rbf.q
-                    centroid = rbf.centroids(neuronId);
+                    centroid = rbf.C(neuronId);
                     x = X(:, i);
                     u = norm(x - centroid);
-                    fu = rbf.exponentialFunction(u, rbf.sigma);    
+                    fu = Activation.sigmoid(u, rbf.sigma);    
                     Z(neuronId, i) = fu;
                 end
             end
             
-            Z = [(-1) * ones(1, N); Z];
+            Z = rbf.addBias(Z);
         end
     end
 end
