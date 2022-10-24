@@ -2,7 +2,7 @@ classdef ExtremeLearningMachine
     properties
         q
         sigma
-        W
+        C
         M
     end
     
@@ -24,9 +24,8 @@ classdef ExtremeLearningMachine
         end
         
         function elm = train(elm, X, D)
-            % Quantity Of Weight Equals the Number Of Input Features
             [p, ~] = size(X);
-            elm = elm.calculateWeights(p);
+            elm = elm.calculateCentroids(p);
             Z = elm.hiddenLayerTransformation(X);
             elm.M = D * Z' / (Z * Z');
         end
@@ -36,14 +35,14 @@ classdef ExtremeLearningMachine
             prediction = elm.M * Z;
         end
 
-        function elm = calculateWeights(elm, p)
-            elm.W = normrnd(0, elm.sigma, [elm.q, p + 1]);
+        function elm = calculateCentroids(elm, p)
+            elm.C = normrnd(0, elm.sigma, [elm.q, p + 1]);
         end
 
         function Z = hiddenLayerTransformation(elm, X)
             [~, n] = size(X);
             X = elm.addBias(X);
-            Z = elm.W * X;
+            Z = elm.C * X;
             Z = elm.sigmoid(Z, elm.sigma);
             Z = [(-1) * ones(1, n); Z];
         end
