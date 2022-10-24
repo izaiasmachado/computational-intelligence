@@ -9,4 +9,7 @@ rbf = RadialBasisFunction(q);
 rbf = rbf.train(X, D);
 
 prediction = rbf.predict(X);
-plot(x, y, '*', x', prediction, '-k');
+plot(X, D, '*', X, prediction, '-k');
+
+r2 = Testing.r2(rbf, X, D);
+fprintf('Erro Quadrático: %f\n', r2);

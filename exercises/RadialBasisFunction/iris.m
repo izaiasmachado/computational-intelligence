@@ -10,4 +10,5 @@ X = Processing.zscore(X);
 
 q = 20;
 rbf = RadialBasisFunction(q);
-Testing.leaveOneOut(rbf, X, D);
+accuracy = Testing.leaveOneOut(rbf, X, D);
+fprintf('Acurácia: %f\n', accuracy);

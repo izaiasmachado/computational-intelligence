@@ -1,7 +1,14 @@
 classdef Testing
     
     methods(Static)
-        function leaveOneOut(net, X, D)
+        function r2 = r2(model, X, D)
+            predicted = model.predict(X);
+            sqe = sum((D - predicted) .^ 2);
+            syy = sum((D - mean(D)) .^ 2);
+            r2 = 1 - (sqe / syy);
+        end
+
+        function accuracy = leaveOneOut(model, X, D)
             count = 0;
             [~, n] = size(X);
             
@@ -15,8 +22,8 @@ classdef Testing
                 x_train(:, i) = [];
                 d_train(:, i) = [];
 
-                net = net.train(x_train, d_train);
-                predicted = net.predict(x_test);
+                model = model.train(x_train, d_train);
+                predicted = model.predict(x_test);
 
                 [~, target_class] = max(d_test);
                 [~, predicted_class] = max(predicted);
@@ -27,7 +34,6 @@ classdef Testing
             end
             
             accuracy = count / n;
-            fprintf('Acurácia: %f\n', accuracy);
         end
     end
 end

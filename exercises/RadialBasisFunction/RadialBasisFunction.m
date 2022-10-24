@@ -54,4 +54,3 @@ classdef RadialBasisFunction
         end
     end
 end
-

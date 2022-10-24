@@ -10,4 +10,5 @@ X = Processing.zscore(X);
 
 q = 20;
 elm = ExtremeLearningMachine(q);
-Testing.leaveOneOut(elm , X, D);
+accuracy = Testing.leaveOneOut(elm , X, D);
+fprintf('Acurácia: %f\n', accuracy);
