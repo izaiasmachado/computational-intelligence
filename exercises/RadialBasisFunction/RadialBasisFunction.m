@@ -24,7 +24,7 @@ classdef RadialBasisFunction
             % hidden layer weights.
 
             [p, ~] = size(X);
-            rbf = rbf.calculateHiddenLayersWeights(p);
+            rbf = rbf.calculateHiddenLayerWeights(p);
             Z = rbf.outputHiddenLayer(X);
             rbf.M = D * Z' / (Z * Z');
         end
@@ -41,8 +41,8 @@ classdef RadialBasisFunction
             prediction = rbf.M * Z;
         end
 
-        function rbf = calculateHiddenLayersWeights(rbf, p)
-            % CALCULATECENTROIDS Random Hidden Layers Weights, that are
+        function rbf = calculateHiddenLayerWeights(rbf, p)
+            % CALCULATEHIDDENLAYERWEIGHTS Random Hidden Layers Weights, that are
             % defined using standard deviation.
             % 
             % p: Quantity of Input Classes (without bias).

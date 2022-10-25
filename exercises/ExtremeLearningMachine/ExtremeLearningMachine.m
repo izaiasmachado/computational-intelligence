@@ -23,7 +23,7 @@ classdef ExtremeLearningMachine
             % Given the number of features in the databases, calculates the
             % hidden layer weights.
             [p, ~] = size(X);
-            elm = elm.calculateHiddenLayersWeights(p);
+            elm = elm.calculateHiddenLayerWeights(p);
            
             % Feeds the input to the newly generated hidden layer and
             % returns the output
@@ -45,8 +45,8 @@ classdef ExtremeLearningMachine
             prediction = elm.M * Z;
         end
 
-        function elm = calculateHiddenLayersWeights(elm, p)
-            % CALCULATECENTROIDS Random Hidden Layers Weights, that are
+        function elm = calculateHiddenLayerWeights(elm, p)
+            % CALCULATEHIDDENLAYERWEIGHTS Random Hidden Layers Weights, that are
             % defined using standard deviation.
             % 
             % p: Quantity of Input Classes (without bias).
