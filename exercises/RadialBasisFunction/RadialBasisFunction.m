@@ -47,7 +47,7 @@ classdef RadialBasisFunction
             % 
             % p: Quantity of Input Classes (without bias).
             
-            rbf.C = normrnd(0, rbf.sigma, [rbf.q, p + 1]);
+            rbf.C = normrnd(0, rbf.sigma, [p, rbf.q]);
         end
 
         function Z = outputHiddenLayer(rbf, X)
@@ -60,7 +60,7 @@ classdef RadialBasisFunction
 
             for i = 1 : n
                 for neuronId = 1 : rbf.q
-                    centroid = rbf.C(neuronId);
+                    centroid = rbf.C(:, neuronId);
                     x = X(:, i);
                     u = norm(x - centroid);
                     fu = Activation.sigmoid(u, rbf.sigma);
