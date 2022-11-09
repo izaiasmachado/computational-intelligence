@@ -6,6 +6,17 @@ classdef RadialBasisFunction
         sigma % Neuron Standard Deviation
     end
     
+    methods(Static)
+        function fu = sigmoid(u, sigma)
+            fu = exp(-u .^ 2 / (2 * sigma .^ 2));
+        end
+
+        function x = addBias(x)
+            [~, n] = size(x);
+            x = [(-1) * ones(1, n); x];
+        end
+    end
+
     methods
         function rbf = RadialBasisFunction(q)
             rbf.q = q;
@@ -63,13 +74,13 @@ classdef RadialBasisFunction
                     centroid = rbf.C(:, neuronId);
                     x = X(:, i);
                     u = norm(x - centroid);
-                    fu = Utils.sigmoid(u, rbf.sigma);
+                    fu = RadialBasisFunction.sigmoid(u, rbf.sigma);
                     Z(neuronId, i) = fu;
                 end
             end
             
             % Z is (q, n)
-            Z = Utils.addBias(Z); % So with the row of bias, Z is (q + 1, n)
+            Z = RadialBasisFunction.addBias(Z); % So with the row of bias, Z is (q + 1, n)
         end
     end
 end

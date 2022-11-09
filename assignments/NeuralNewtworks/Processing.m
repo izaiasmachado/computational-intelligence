@@ -1,14 +1,5 @@
-classdef Utils
+classdef Processing
     methods(Static)
-        function fu = sigmoid(u, sigma)
-            fu = exp(-u .^ 2 / (2 * sigma .^ 2));
-        end
-        
-        function x = addBias(x)
-            [~, n] = size(x);
-            x = [(-1) * ones(1, n); x];
-        end
-
         function X = zscore(X)
             [n, ~] = size(X);
             
@@ -18,7 +9,7 @@ classdef Utils
             end
         end
 
-        function labelColumns = transformLabelsToColumns(labels)
+        function labelColumns = oneHotEnconding(labels)
             N = length(labels);
             uniqueLabels = unique(labels);
             labelColumns = zeros(N, length(uniqueLabels));
