@@ -10,29 +10,27 @@ X = Utils.zscore(X);
 
 model = RadialBasisFunction(30);
 trainingPercentage = 0.7;
+net = feedforwardnet(40);
+
 totalEpochs = 10;
 
-[accuracy] = runEpochs(totalEpochs, trainingPercentage, X, D, model);
+accuracy = zeros(1, totalEpochs);
 
-fprintf('===== Treinamento e Teste da RBF =====\n');
+for epoch = 1 : totalEpochs
+    [X_train, Y_train, X_test, Y_test] = holdOutSamples(X, D, trainingPercentage);
+
+    net = train(net, X_train, Y_train);
+    prediction = net(X_test);
+    [accuracy(epoch)] = validateModel(Y_test, prediction);
+end
+
+fprintf('===== Treinamento e Teste da MLP =====\n');
 
 for i = 1 : totalEpochs
     fprintf('Acurácia Época %d: %f\n', i, accuracy(i));
 end 
 
 fprintf('Acurácia Média: %f\n', mean(accuracy));
-
-function [accuracy] = runEpochs(totalEpochs, trainingPercentage, X, D, model)
-    accuracy = zeros(1, totalEpochs);
-
-    for epoch = 1 : totalEpochs
-        [X_train, Y_train, X_test, Y_test] = holdOutSamples(X, D, trainingPercentage);
-
-        model = model.train(X_train, Y_train);
-        prediction = model.predict(X_test);
-        [accuracy(epoch)] = validateModel(Y_test, prediction);
-    end
-end
 
 function [accuracy] = validateModel(Y_test, prediction)
     [~, testSamples] = size(Y_test);
