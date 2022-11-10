@@ -45,6 +45,7 @@ end
 
 % É mostrado de forma visual os valores das acurácias para cada época e
 % tambéma acurácia média.
+fprintf('===== Treinamento e Teste para RBF =====\n');
 
 for i = 1 : totalEpochs
     fprintf('Acurácia Época %d: %f\n', i, accuracy(i));

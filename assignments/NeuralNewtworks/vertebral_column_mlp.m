@@ -29,7 +29,6 @@ trainingPercentage = 0.7;
 totalEpochs = 10;
 accuracy = zeros(1, totalEpochs);
 
-
 for epoch = 1 : totalEpochs
         % Em cada época é realizado um novo hold out
 
@@ -47,6 +46,7 @@ end
 
 % É mostrado de forma visual os valores das acurácias para cada época e
 % tambéma acurácia média.
+fprintf('===== Treinamento e Teste para MLP =====\n');
 
 for i = 1 : totalEpochs
     fprintf('Acurácia Época %d: %f\n', i, accuracy(i));
