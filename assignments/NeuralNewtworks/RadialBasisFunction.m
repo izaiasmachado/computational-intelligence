@@ -71,11 +71,10 @@ classdef RadialBasisFunction
 
         function rbf = calculateHiddenLayerWeights(rbf, p)
             % CALCULATEHIDDENLAYERWEIGHTS Pesos aleatórios são calculados
-            % utilizando o desvio padrão que foi definido.
             % 
             % p: Quantidade de Colunas de Entrada (sem bias/viés).
             
-            rbf.C = normrnd(0, rbf.sigma, [p, rbf.q]);
+            rbf.C = randn(p,rbf.q);
         end
 
         function Z = outputHiddenLayer(rbf, X)
