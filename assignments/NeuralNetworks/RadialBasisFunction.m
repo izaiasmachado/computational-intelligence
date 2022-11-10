@@ -11,7 +11,7 @@ classdef RadialBasisFunction
         q % Quatidade de neurônios na Camada Oculta
         C % Pesos da Camada Oculta
         M % Pesos da Camada de Saída
-        sigma % Desvio padrão para os pesos da camada oculta
+        sigma % Desvio padrão para a função de ativação
     end
     
     methods(Static)
