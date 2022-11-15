@@ -8,7 +8,7 @@ classdef RadialBasisFunction
     %RADIALBASISFUNCTION Modelo da rede neural de função de base radial
 
     properties
-        q % Quatidade de neurônios na Camada Oculta
+        q % Quantidade de neurônios na Camada Oculta
         C % Pesos da Camada Oculta
         M % Pesos da Camada de Saída
         sigma % Desvio padrão para a função de ativação
@@ -74,7 +74,7 @@ classdef RadialBasisFunction
             % 
             % p: Quantidade de Colunas de Entrada (sem bias/viés).
             
-            rbf.C = randn(p,rbf.q);
+            rbf.C = randn(p, rbf.q);
         end
 
         function Z = outputHiddenLayer(rbf, X)
@@ -84,15 +84,13 @@ classdef RadialBasisFunction
             [~, n] = size(X);
             Z = zeros(rbf.q, n);
 
-            % Percorre cada elemento da entrada
-            for i = 1 : n
-                % Percorre cada neurônio
+            % Percorre cada amostra
+            for sampleId = 1 : n
+                % Percorre cada neurônio para cada amostra
                 for neuronId = 1 : rbf.q
-                    centroid = rbf.C(:, neuronId); % Armazena o centroid do neurônio
-                    x = X(:, i); % Armazena o elemento
-                    u = norm(x - centroid); % Calcula a norma da diferença entre vetor do elemento e centroid
+                    u = norm(X(:, sampleId) - rbf.C(:, neuronId)); % Calcula a norma da diferença entre vetor do elemento e centroid
                     fu = RadialBasisFunction.sigmoid(u, rbf.sigma); % Processa a norma pela função de ativação
-                    Z(neuronId, i) = fu;
+                    Z(neuronId, sampleId) = fu;
                 end
             end
             

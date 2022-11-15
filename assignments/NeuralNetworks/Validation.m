@@ -6,7 +6,7 @@
 
 classdef Validation
     methods(Static)
-        function [X_train, Y_train, X_test, Y_test] = holdOutSamples(X, D, trainingPercentage)
+        function [X_train, Y_train, X_test, Y_test] = holdOutSamples(X, D, trainning)
             % HOLDOUTSAMPLES Dados duas matrizes X e D e um percentual para
             % treinamento. São selecionados de forma aleatória uma
             % quantidade de amostras para treinamento e o restante para
@@ -15,26 +15,24 @@ classdef Validation
             [inputClasses, totalSamples] = size(X);
             [outputClasses, ~] = size(D);
         
-            testingPercentage = 1 - trainingPercentage;
-            quantityOfTestingSamples = round(testingPercentage * totalSamples);
+            testingSamples = round((1 - trainning) * totalSamples);
         
             % X_train recebe X com os valores embaralhados
             shuffledSampleIndexes = randperm(length(X));
-        
             X_train = X(:, shuffledSampleIndexes);
             Y_train = D(:, shuffledSampleIndexes);
             
             % As amostras excedentes são gradativamente retiradas de
             % X_train, Y_train e alocadas em X_test e Y_test.
-            X_test = zeros(inputClasses, quantityOfTestingSamples);
-            Y_test = zeros(outputClasses, quantityOfTestingSamples);
+            X_test = zeros(inputClasses, testingSamples);
+            Y_test = zeros(outputClasses, testingSamples);
             
-            for i = 1 : quantityOfTestingSamples
-                Y_test(:, i) = Y_train(:, i);
-                X_test(:, i) = X_train(:, i);
+            for sampleId = 1 : testingSamples
+                Y_test(:, sampleId) = Y_train(:, sampleId);
+                X_test(:, sampleId) = X_train(:, sampleId);
                 
-                X_train(:, i) = [];
-                Y_train(:, i) = [];
+                X_train(:, sampleId) = [];
+                Y_train(:, sampleId) = [];
             end
         end
         
@@ -46,11 +44,11 @@ classdef Validation
 
             [~, testSamples] = size(Y_test);
         
-            [~, predictedClass] = max(prediction);
-            [~, actualClass] = max(Y_test);
+            [~, predicted] = max(prediction);
+            [~, actual] = max(Y_test);
         
-            hitsArr = predictedClass == actualClass;
-            testHits = sum(hitsArr);
+            hits = predicted == actual;
+            testHits = sum(hits);
             accuracy = testHits / testSamples;
         end
     end
